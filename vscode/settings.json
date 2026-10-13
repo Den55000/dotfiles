@@ -1,0 +1,43 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": [
+          "string.quoted.docstring.python",
+          "string.quoted.double.block.python",
+          "string.quoted.single.block.python"
+        ],
+        "settings": {
+          "foreground": "#6A9955",
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+"editor.largeFileOptimizations": false,
+"python.analysis.typeCheckingMode": "standard",
+"workbench.startupEditor": "none",
+
+
+  "python.analysis.diagnosticSeverityOverrides": {
+      "reportMissingTypeStubs": "none",
+      "reportMissingImports": "none",
+      "reportUnknownVariableType": "none",
+      "reportUnknownArgumentType": "none",
+      "reportUnknownMemberType": "none"
+
+  },
+  "chat.viewSessions.orientation": "stacked",
+  "terminal.integrated.commandsToSkipShell": [
+    "matlab.interrupt"
+  ],
+  "terminal.integrated.cursorStyle": "line",
+  "claudeCode.preferredLocation": "panel",
+  "workbench.colorTheme": "Dark Modern",
+  "editor.colorDecoratorsLimit": 10000,
+  "editor.defaultColorDecorators": "always"
+}
