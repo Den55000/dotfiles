@@ -1,0 +1,596 @@
+{
+  "Hotkey": {
+    "win": false,
+    "ctrl": false,
+    "alt": true,
+    "shift": false,
+    "code": 32,
+    "key": ""
+  },
+  "UseLowLevelGlobalHotkey": false,
+  "ShowAppDetails": false,
+  "BackspaceGoesBack": true,
+  "SingleClickActivates": false,
+  "HighlightSearchOnActivate": true,
+  "KeepPreviousQuery": false,
+  "ShowSystemTrayIcon": true,
+  "IgnoreShortcutWhenFullscreen": false,
+  "IgnoreShortcutWhenBusy": false,
+  "AllowBreakthroughShortcut": false,
+  "AllowExternalReload": false,
+  "ProviderSettings": {
+    "BaldBeardedBuilder.WeatherforCommandPalette_8gmfv84wfe0w6!App!ID": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "lamteteeow.PowerTranslate_8x1cxbv97rw5g!App!PowerTranslateExtension": {
+      "IsEnabled": false,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "WinGet": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "com.microsoft.cmdpal.builtin.datetime": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "com.microsoft.cmdpal.builtin.timedate.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "patcher454.TranslateCmdPal_n87hg63tf2104!App!ID": {
+      "IsEnabled": false,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "JiriPolasek.UnitConverterforCommandPalette_15b1mzc2p8w76!App!ID": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "WindowWalker": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "EthanYan.SuperSpaceforCommandPalette_e5p82aanaze9m!App!ID": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "27078NielsLaute.GitrepositoriesforCommandPalette_91se88q2mhfz2!App!ID": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "com.microsoft.cmdpal.builtin.remotedesktop": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "com.microsoft.cmdpal.builtin.remotedesktop.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "Windows.Services": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "JiriPolasek.RecentFilesforCommandPalette_15b1mzc2p8w76!App!ID": {
+      "IsEnabled": false,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "com.microsoft.cmdpal.builtin.run": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "com.microsoft.cmdpal.builtin.shell.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "ExtensionDemografiKIToolbox_tb1vwmahst0ve!App!ID": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys7207149076499082290": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys6224378385071502265": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "com.microsoft.cmdpal.powertoys.fancyzones.layouts": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys5663908513188358813": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "com.microsoft.powertoys.colorpicker.savedColors": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys10586303287870580798": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys10426722571666106526": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys2076026557673748590": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys8426428888523188369": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "com.microsoft.cmdpal.powertoys.fancyzones.monitors": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys6920494299582661645": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys6331418359100174436": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys13810161225744882509": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "Microsoft.PowerToys.SparseApp_8wekyb3d8bbwe!PowerToys.CmdPalExtension!PowerToys8936528296015935035": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "com.microsoft.powertoys.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "Bookmarks": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "StontyTech.SteamPalforCommandPalette_c0zwn7y6enkny!App!ID": {
+      "IsEnabled": false,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "Windows.Registry": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "com.microsoft.cmdpal.builtin.core": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "com.microsoft.cmdpal.reload": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        },
+        "com.microsoft.cmdpal.log": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        },
+        "com.microsoft.cmdpal.quit": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "AllApps": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "WindowsTerminalProfiles": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID3782523730744771892": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID16373718118430280717": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID10613480470920682484": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID1356884505589553203": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID5311090585259005906": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID15012205272398742103": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID17297336682992123311": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID5817624158597013579": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID2679815592394048523": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID4098218658521088201": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID16678139859110173449": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID17744437724937531299": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID5850990346743929326": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID9219690510992084709": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID18318111668419931463": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID13043709537365782584": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID11831917269997565061": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "com.jpsoftworks.cmdpal.symbols.index": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID4297258108961760014": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID7049283047971925689": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID1991077009690394686": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID1112638362320669523": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "com.jpsoftworks.cmdpal.symbols.emojis": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID10246545438925587723": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID11439581386481791069": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID8409178186887734900": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID6499512804017753153": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID6128452231304156488": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID16707055556378796564": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID2960803676461034607": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID15067389303637240663": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        },
+        "JiriPolasek.SymbolsandEmojisforCommandPalette_15b1mzc2p8w76!App!ID8260385122604745630": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "com.microsoft.cmdpal.builtin.windowssettings": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "com.microsoft.cmdpal.builtin.windows.settings.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "com.microsoft.cmdpal.builtin.calculator": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "com.microsoft.cmdpal.builtin.calculator.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "com.microsoft.cmdpal.builtin.system": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "com.microsoft.cmdpal.builtin.system.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "com.microsoft.cmdpal.builtin.websearch": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "com.microsoft.cmdpal.builtin.websearch.execute.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        },
+        "com.microsoft.cmdpal.builtin.websearch.openurl.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": true
+        }
+      },
+      "PinnedCommandIds": []
+    },
+    "Windows.ClipboardHistory": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "ExtentionDemografiKIToolbox_8wekyb3d8bbwe!App!ID": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "PerformanceMonitor": {
+      "IsEnabled": true,
+      "FallbackCommands": {},
+      "PinnedCommandIds": []
+    },
+    "Files": {
+      "IsEnabled": true,
+      "FallbackCommands": {
+        "com.microsoft.cmdpal.builtin.indexer.fallback": {
+          "IsEnabled": true,
+          "IncludeInGlobalResults": false
+        }
+      },
+      "PinnedCommandIds": []
+    }
+  },
+  "FallbackRanks": [
+    "com.microsoft.cmdpal.builtin.shell.fallback",
+    "com.microsoft.cmdpal.builtin.calculator.fallback",
+    "com.microsoft.cmdpal.builtin.indexer.fallback",
+    "com.microsoft.cmdpal.builtin.websearch.openurl.fallback",
+    "com.microsoft.cmdpal.builtin.websearch.execute.fallback",
+    "com.microsoft.cmdpal.builtin.windows.settings.fallback",
+    "com.microsoft.cmdpal.quit",
+    "com.microsoft.cmdpal.reload",
+    "com.microsoft.cmdpal.log",
+    "com.microsoft.cmdpal.builtin.timedate.fallback",
+    "com.microsoft.cmdpal.builtin.system.fallback",
+    "com.microsoft.cmdpal.builtin.remotedesktop.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.microsoft.powertoys.fallback",
+    "com.jpsoftworks.cmdpal.symbols.index",
+    "com.jpsoftworks.cmdpal.symbols.emojis"
+  ],
+  "Aliases": {
+    "??": {
+      "CommandId": "com.microsoft.cmdpal.websearch",
+      "Alias": "??",
+      "IsDirect": true
+    },
+    ")": {
+      "CommandId": "com.microsoft.cmdpal.timedate",
+      "Alias": ")",
+      "IsDirect": true
+    },
+    "\u003E": {
+      "CommandId": "com.microsoft.cmdpal.shell",
+      "Alias": "\u003E",
+      "IsDirect": true
+    },
+    ":": {
+      "CommandId": "com.microsoft.cmdpal.registry",
+      "Alias": ":",
+      "IsDirect": true
+    },
+    "\u003C": {
+      "CommandId": "com.microsoft.cmdpal.windowwalker",
+      "Alias": "\u003C",
+      "IsDirect": true
+    },
+    "$": {
+      "CommandId": "com.microsoft.cmdpal.windowsSettings",
+      "Alias": "$",
+      "IsDirect": true
+    },
+    "=": {
+      "CommandId": "com.microsoft.cmdpal.calculator",
+      "Alias": "=",
+      "IsDirect": true
+    },
+    "file ": {
+      "CommandId": "com.microsoft.indexer.fileSearch",
+      "Alias": "file",
+      "IsDirect": false
+    }
+  },
+  "CommandHotkeys": [],
+  "SummonOn": "ToMouse",
+  "DisableAnimations": true,
+  "LastWindowPosition": {
+    "X": 560,
+    "Y": 336,
+    "Width": 800,
+    "Height": 480,
+    "ScreenWidth": 1920,
+    "ScreenHeight": 1152,
+    "Dpi": 96,
+    "IsSizeValid": true
+  },
+  "AutoGoHomeInterval": "-00:00:00.0010000",
+  "EscapeKeyBehaviorSetting": "ClearSearchFirstThenGoBack",
+  "EnableDock": false,
+  "DockSettings": {
+    "Side": "Top",
+    "DockSize": "Default",
+    "AlwaysOnTop": false,
+    "Backdrop": "Transparent",
+    "Theme": "Dark",
+    "ColorizationMode": "None",
+    "CustomThemeColor": {
+      "A": 255,
+      "R": 0,
+      "G": 120,
+      "B": 212
+    },
+    "CustomThemeColorIntensity": 100,
+    "BackgroundImageOpacity": 20,
+    "BackgroundImageBlurAmount": 0,
+    "BackgroundImageBrightness": 0,
+    "BackgroundImageFit": "Fill",
+    "BackgroundImagePath": null,
+    "StartBands": [
+      {
+        "ProviderId": "com.microsoft.cmdpal.builtin.core",
+        "CommandId": "com.microsoft.cmdpal.home",
+        "ShowTitles": null,
+        "ShowSubtitles": null
+      },
+      {
+        "ProviderId": "WinGet",
+        "CommandId": "com.microsoft.cmdpal.winget",
+        "ShowTitles": false,
+        "ShowSubtitles": null
+      }
+    ],
+    "CenterBands": [],
+    "EndBands": [
+      {
+        "ProviderId": "PerformanceMonitor",
+        "CommandId": "com.microsoft.cmdpal.performanceWidget",
+        "ShowTitles": null,
+        "ShowSubtitles": null
+      },
+      {
+        "ProviderId": "com.microsoft.cmdpal.builtin.datetime",
+        "CommandId": "com.microsoft.cmdpal.timedate.dockBand",
+        "ShowTitles": null,
+        "ShowSubtitles": null
+      }
+    ],
+    "ShowLabels": true
+  },
+  "Theme": "Default",
+  "ColorizationMode": "CustomColor",
+  "CustomThemeColor": {
+    "A": 255,
+    "R": 105,
+    "G": 121,
+    "B": 126
+  },
+  "CustomThemeColorIntensity": 100,
+  "BackgroundImageTintIntensity": 100,
+  "BackgroundImageOpacity": 100,
+  "BackgroundImageBlurAmount": 2,
+  "BackgroundImageBrightness": 100,
+  "BackgroundImageFit": "UniformToFill",
+  "BackgroundImagePath": "C:\\Users\\Denys Verich\\Pictures\\Anpassung\\Andere\\ComnadPaletteBackground.jpg",
+  "BackdropStyle": "Mica",
+  "BackdropOpacity": 76
+}

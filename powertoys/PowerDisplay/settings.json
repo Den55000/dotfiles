@@ -1,0 +1,56 @@
+{
+  "properties": {
+    "defaultActivationShortcut": {
+      "win": true,
+      "ctrl": true,
+      "alt": false,
+      "shift": true,
+      "code": 80,
+      "key": ""
+    },
+    "activation_shortcut": {
+      "win": true,
+      "ctrl": true,
+      "alt": false,
+      "shift": true,
+      "code": 80,
+      "key": ""
+    },
+    "monitor_refresh_delay": 5,
+    "monitors": [
+      {
+        "name": "Built-in display",
+        "monitorNumber": 1,
+        "monitorIconGlyph": "\uE7F8",
+        "id": "WMI_CMN147D_1",
+        "communicationMethod": "WMI",
+        "currentBrightness": 100,
+        "colorTemperatureVcp": 5,
+        "contrast": 0,
+        "volume": 0,
+        "isHidden": false,
+        "enableContrast": false,
+        "enableVolume": false,
+        "enableInputSource": false,
+        "enableRotation": false,
+        "enableColorTemperature": false,
+        "enablePowerState": false,
+        "capabilitiesRaw": "",
+        "vcpCodesFormatted": [],
+        "supportsBrightness": true,
+        "supportsContrast": false,
+        "supportsColorTemperature": false,
+        "supportsVolume": false,
+        "supportsInputSource": false,
+        "supportsPowerState": false
+      }
+    ],
+    "restore_settings_on_startup": false,
+    "show_system_tray_icon": true,
+    "show_profile_switcher": true,
+    "show_identify_monitors_button": true,
+    "custom_vcp_mappings": []
+  },
+  "name": "PowerDisplay",
+  "version": "1"
+}
