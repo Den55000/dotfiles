@@ -1,0 +1,51 @@
+#!/bin/sh
+# dots: manage ~/dotfiles. See ~/dotfiles/README.md
+DOT=${DOTFILES:-$HOME/dotfiles}
+g() { git -C "$DOT" "$@"; }
+
+case "${1:-status}" in
+status)
+    g status -sb
+    ;;
+sync)
+    # Commit local edits, take everyone else's, push, re-link new files.
+    shift
+    g add -A
+    g diff --cached --quiet || g commit -q -m "${*:-sync from $(hostname)}"
+    g pull -q --rebase || { echo "dots: pull failed; fix it in $DOT (git status)"; exit 1; }
+    g push -q && "$DOT/install.sh" && echo "dotfiles: in sync ($(g log -1 --format='%h %s'))"
+    ;;
+check)
+    # Used at shell start: no network wait. Fetches in the background at most
+    # once a day, and reports what the last fetch found.
+    [ -d "$DOT/.git" ] || exit 0
+    if [ -z "$(find "$DOT/.git/FETCH_HEAD" -mmin -1440 2>/dev/null)" ]; then
+        GIT_TERMINAL_PROMPT=0 GIT_SSH_COMMAND='ssh -o BatchMode=yes' \
+            git -C "$DOT" fetch -q </dev/null >/dev/null 2>&1 &
+    fi
+    n=$(g rev-list --count 'HEAD..@{u}' 2>/dev/null)
+    [ "${n:-0}" -gt 0 ] && echo "dotfiles: $n change(s) behind, run: dots sync"
+    exit 0
+    ;;
+install)
+    "$DOT/install.sh"
+    ;;
+parsers)
+    # Copy compiled treesitter parsers to a host that can't build them.
+    [ -n "${2:-}" ] || { echo "usage: dots parsers <ssh-host>"; exit 1; }
+    tar -C "$HOME/.local/share/nvim/site" -czf - parser parser-info queries |
+        ssh "$2" 'mkdir -p ~/.local/share/nvim/site && tar -C ~/.local/share/nvim/site -xzf -'
+    ;;
+help|-h|--help)
+    cat <<EOF
+dots              status of ~/dotfiles
+dots sync [msg]   commit local edits, pull, push, re-link
+dots install      (re)create the symlinks
+dots parsers HOST copy compiled nvim treesitter parsers to HOST
+dots <git args>   any git command inside ~/dotfiles (dots log, dots diff ...)
+EOF
+    ;;
+*)
+    g "$@"
+    ;;
+esac

@@ -1,0 +1,6 @@
+# Written by the `style` colour-scheme switcher on each machine
+nvim/theme.lua
+kitty/colors-active.conf
+
+# Backups
+*.bak*
