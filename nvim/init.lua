@@ -384,6 +384,22 @@ do
     vim.cmd.colorscheme 'tokyonight-night'
   end
 
+  -- Recolour live when theme.lua changes: `style` rewrites it locally and
+  -- pushes it to the hosts in ~/.config/style/remotes (e.g. the server).
+  -- Watches the directory because `style` replaces the file instead of editing it.
+  local theme_watch = vim.uv.new_fs_event()
+  local theme_timer = vim.uv.new_timer()
+  if theme_watch and theme_timer then
+    theme_watch:start(vim.fn.stdpath 'config', {}, function(err, fname)
+      if err or fname ~= 'theme.lua' then return end
+      theme_timer:start(150, 0, vim.schedule_wrap(function()
+        if not vim.uv.fs_stat(theme) then return end
+        local ok, e = pcall(dofile, theme)
+        if not ok then vim.notify('theme.lua failed: ' .. tostring(e), vim.log.levels.WARN) end
+      end))
+    end)
+  end
+
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
   require('todo-comments').setup { signs = false }
