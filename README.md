@@ -15,6 +15,7 @@ edits the repo.
 | `kitty/*.conf`  | `~/.config/kitty/` (only where kitty is installed) |
 | `bin/dots`      | `~/.local/bin/dots`                         |
 | `vscode/`       | not linked, kept as an archive              |
+| `notepad++/`    | not linked, copy of `%APPDATA%\Notepad++` (Windows); `config.xml` has the recent-files and search history stripped |
 
 ## New machine
 
