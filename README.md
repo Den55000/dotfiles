@@ -51,7 +51,9 @@ pulled automatically.
 
 The desktop's `style` colour switcher writes `nvim/theme.lua` and
 `~/.config/kitty/colors-active.conf` on each machine. Without them nvim falls
-back to tokyonight and kitty to the Campbell colours.
+back to tokyonight and kitty to the Campbell colours. nvim watches
+`theme.lua` and recolours live; the laptop's `style` also pushes it to the
+hosts in `~/.config/style/remotes`, so nvim over ssh follows the desktop theme.
 
 ## Treesitter parsers
 
