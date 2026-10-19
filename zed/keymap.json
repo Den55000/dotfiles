@@ -1,0 +1,229 @@
+// Zed keymap
+//
+// Ported from the Neovim config in ~/dotfiles/nvim/init.lua.
+// Leader is <space>, as in Neovim. Many Neovim LSP defaults
+// (grr, gri, gra, grn, gO, ]c, [c, ]d, [d) already exist in Zed's vim mode.
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+[
+  {
+    // Leader mappings in normal mode
+    "context": "Editor && vim_mode == normal && !menu",
+    "bindings": {
+      // File explorer (Neo-tree)
+      "space e": "project_panel::ToggleFocus",
+
+      // Search (Telescope)
+      "space s f": "file_finder::Toggle",
+      "space s g": "pane::DeploySearch",
+      "space s w": "pane::DeploySearch",
+      "space s d": "diagnostics::Deploy",
+      "space s c": "command_palette::Toggle",
+      "space s k": "zed::OpenKeymap",
+      "space s n": "zed::OpenSettingsFile",
+      "space space": "tab_switcher::Toggle",
+      "space /": "buffer_search::Deploy",
+
+      // Diagnostics
+      "space q": "diagnostics::Deploy",
+
+      // Terminal panel (toggle with ctrl-`, Zed's default)
+      "space t n": "workspace::NewTerminal",
+
+      // Toggles
+      "space t h": "editor::ToggleInlayHints",
+      "space t b": "editor::ToggleGitBlameInline",
+
+      // Git hunks (gitsigns)
+      "space h s": "git::ToggleStaged",
+      "space h r": "git::Restore",
+      "space h S": "git::StageFile",
+      "space h p": "editor::ToggleSelectedDiffHunks",
+      "space h i": "editor::ToggleSelectedDiffHunks",
+      "space h b": "editor::BlameHover",
+      "space h d": "git::Diff",
+      "space h q": "git::Diff",
+
+      // LSP (Neovim 0.11 defaults not already in Zed)
+      "g r d": "editor::GoToDefinition",
+      "g r t": "editor::GoToTypeDefinition",
+      "g r shift-d": "editor::GoToDeclaration",
+      "g shift-w": "project_symbols::Toggle",
+
+      // Format
+      "space f": "editor::Format",
+
+      // Move focus between panes/panels
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp"
+    }
+  },
+  {
+    // Leader mappings in visual mode
+    "context": "Editor && vim_mode == visual && !menu",
+    "bindings": {
+      "space s w": "pane::DeploySearch",
+      "space h s": "git::ToggleStaged",
+      "space h r": "git::Restore",
+      "space f": "editor::FormatSelections"
+    }
+  },
+  {
+    // Markdown preview (<leader>p): opens in place of the file...
+    "context": "Editor && vim_mode == normal && !menu && extension == md",
+    "bindings": {
+      "space p": "markdown::OpenPreview"
+    }
+  },
+  {
+    // ...and closes again, returning to the file
+    "context": "MarkdownPreview",
+    "bindings": {
+      "space p": "pane::CloseActiveItem"
+    }
+  },
+  {
+    // Completion menu (blink.cmp 'default' preset)
+    "context": "Editor && vim_mode == insert && showing_completions",
+    "bindings": {
+      "ctrl-y": "editor::ConfirmCompletion",
+      "ctrl-e": "editor::Cancel"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "ctrl-k": "editor::ShowSignatureHelp",
+      "ctrl-j": null
+    }
+  },
+  {
+    // Replace Zed's ctrl-j (toggle bottom dock) with navigation everywhere,
+    // e.g. from the project panel. ctrl-k is left alone: it starts Zed's
+    // ctrl-k chords
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-alt-e": "project_panel::ToggleFocus",
+
+      // Bottom dock (replaces the multi-workspace sidebar toggle)
+      "ctrl-alt-j": "workspace::ToggleBottomDock",
+
+      // Disabled: hides every panel at once
+      "ctrl-shift-y": null
+    }
+  },
+  {
+    // Panel toggles must also win inside editors, where vim mode uses
+    // ctrl-b for page up and Zed uses ctrl-alt-e for edit predictions
+    "context": "Editor",
+    "bindings": {
+      "ctrl-b": "workspace::ToggleLeftDock",
+      "ctrl-alt-e": "project_panel::ToggleFocus",
+
+      // Disabled: easy-to-hit toggles for line numbers and inlay hints
+      // (inlay hints stay on <leader>th)
+      "ctrl-;": null,
+      "ctrl-:": null,
+      "ctrl-shift-;": null
+    }
+  },
+  {
+    // Disabled everywhere
+    "bindings": {
+      // Maximizes the current pane, hiding everything else
+      "shift-escape": null,
+      // Toggles project trust (restricted mode)
+      "ctrl-shift-alt-s": null,
+      // Closes the whole window
+      "ctrl-shift-w": null
+    }
+  },
+  {
+    // Leave the terminal with the same keys as in Neovim
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-b": "workspace::ToggleLeftDock",
+      "ctrl-alt-e": "project_panel::ToggleFocus"
+    }
+  },
+  {
+    // ctrl-w closes the current file in normal/visual mode, instantly.
+    // Vim's ctrl-w window chords are disabled so Zed doesn't wait for a
+    // second key; use ctrl-h/j/k/l to move and :vsplit / :split to split
+    "context": "Editor && VimControl && !menu",
+    "bindings": {
+      "ctrl-w": ["pane::CloseActiveItem", { "close_pinned": false }],
+      "ctrl-w +": null,
+      "ctrl-w -": null,
+      "ctrl-w <": null,
+      "ctrl-w =": null,
+      "ctrl-w >": null,
+      "ctrl-w ]": null,
+      "ctrl-w _": null,
+      "ctrl-w a": null,
+      "ctrl-w c": null,
+      "ctrl-w ctrl-]": null,
+      "ctrl-w ctrl-a": null,
+      "ctrl-w ctrl-c": null,
+      "ctrl-w ctrl-g shift-t": null,
+      "ctrl-w ctrl-g t": null,
+      "ctrl-w ctrl-h": null,
+      "ctrl-w ctrl-j": null,
+      "ctrl-w ctrl-k": null,
+      "ctrl-w ctrl-l": null,
+      "ctrl-w ctrl-n": null,
+      "ctrl-w ctrl-o": null,
+      "ctrl-w ctrl-p": null,
+      "ctrl-w ctrl-q": null,
+      "ctrl-w ctrl-s": null,
+      "ctrl-w ctrl-shift-w": null,
+      "ctrl-w ctrl-v": null,
+      "ctrl-w ctrl-w": null,
+      "ctrl-w ctrl-x": null,
+      "ctrl-w d": null,
+      "ctrl-w down": null,
+      "ctrl-w g d": null,
+      "ctrl-w g shift-d": null,
+      "ctrl-w g shift-t": null,
+      "ctrl-w g space": null,
+      "ctrl-w g t": null,
+      "ctrl-w h": null,
+      "ctrl-w j": null,
+      "ctrl-w k": null,
+      "ctrl-w l": null,
+      "ctrl-w left": null,
+      "ctrl-w n": null,
+      "ctrl-w o": null,
+      "ctrl-w p": null,
+      "ctrl-w q": null,
+      "ctrl-w right": null,
+      "ctrl-w s": null,
+      "ctrl-w shift-d": null,
+      "ctrl-w shift-down": null,
+      "ctrl-w shift-h": null,
+      "ctrl-w shift-j": null,
+      "ctrl-w shift-k": null,
+      "ctrl-w shift-l": null,
+      "ctrl-w shift-left": null,
+      "ctrl-w shift-right": null,
+      "ctrl-w shift-s": null,
+      "ctrl-w shift-up": null,
+      "ctrl-w shift-w": null,
+      "ctrl-w space": null,
+      "ctrl-w up": null,
+      "ctrl-w v": null,
+      "ctrl-w w": null,
+      "ctrl-w x": null
+    }
+  }
+]
