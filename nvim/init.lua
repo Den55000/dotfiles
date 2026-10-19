@@ -1009,6 +1009,11 @@ do
   -- NOTE: You can also specify a branch or a specific commit
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
+  -- Windows without Visual Studio: compile parsers with zig (`winget install zig.zig`)
+  if vim.fn.has 'win32' == 1 and not vim.env.CC and vim.fn.executable 'cl' == 0 and vim.fn.executable 'zig' == 1 then
+    vim.env.CC = vim.fn.stdpath 'config' .. '/bin/zig-cc.cmd'
+  end
+
   -- Ensure basic parsers are installed
   local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
   require('nvim-treesitter').install(parsers)
