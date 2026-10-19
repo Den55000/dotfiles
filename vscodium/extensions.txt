@@ -1,0 +1,6 @@
+cweijan.vscode-office
+mechatroner.rainbow-csv
+ms-vscode.hexeditor
+pkief.material-icon-theme
+shalldie.background
+vscodevim.vim

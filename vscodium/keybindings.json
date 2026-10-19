@@ -1,0 +1,129 @@
+// Ported from the Zed keymap / ~/dotfiles/nvim/init.lua
+[
+  // ---- Move focus between editors, sidebar, panel and terminal ----
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft",
+    "when": "(editorTextFocus && vim.mode != 'Insert') || terminalFocus || (!inputFocus && !editorTextFocus)"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight",
+    "when": "(editorTextFocus && vim.mode != 'Insert') || terminalFocus || (!inputFocus && !editorTextFocus)"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.navigateDown",
+    "when": "(editorTextFocus && vim.mode != 'Insert') || terminalFocus || (!inputFocus && !editorTextFocus)"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.navigateUp",
+    "when": "(editorTextFocus && vim.mode != 'Insert') || terminalFocus"
+  },
+
+  // ---- Panels ----
+  // ctrl+b (sidebar), ctrl+alt+b (secondary sidebar) and ctrl+` (terminal)
+  // are VS Code defaults
+  { "key": "ctrl+j", "command": "-workbench.action.togglePanel" },
+  { "key": "ctrl+alt+j", "command": "workbench.action.togglePanel" },
+  // ctrl+alt+b opens a new terminal in a split to the right (for coding LLMs)
+  // instead of the empty secondary sidebar
+  { "key": "ctrl+alt+b", "command": "-workbench.action.toggleAuxiliaryBar" },
+  {
+    "key": "ctrl+alt+b",
+    "command": "workbench.action.createTerminalEditorSide",
+    "when": "!terminalEditorFocus"
+  },
+  // ...and from inside one of those terminals, adds a tab to the same split
+  {
+    "key": "ctrl+alt+b",
+    "command": "workbench.action.createTerminalEditorSameGroup",
+    "when": "terminalEditorFocus"
+  },
+  {
+    "key": "ctrl+alt+e",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "filesExplorerFocus"
+  },
+  {
+    "key": "ctrl+alt+e",
+    "command": "workbench.files.action.showActiveFileInExplorer",
+    "when": "!filesExplorerFocus"
+  },
+
+  // ---- Files ----
+  // ctrl+w closes the file in normal/visual mode; in insert mode it deletes a word
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "editorTextFocus && vim.mode != 'Insert'"
+  },
+  { "key": "ctrl+shift+w", "command": "-workbench.action.closeWindow" },
+
+  // Markdown preview: <space>p again closes it
+  {
+    "key": "space p",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "activeWebviewPanelId == 'markdown.preview'"
+  },
+
+  // ---- Terminal tabs ----
+  {
+    "key": "ctrl+pagedown",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus && !terminalEditorFocus"
+  },
+  {
+    "key": "ctrl+pageup",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus && !terminalEditorFocus"
+  },
+  // Terminals in the right split are tabs, so switch tabs there
+  {
+    "key": "ctrl+pagedown",
+    "command": "workbench.action.nextEditorInGroup",
+    "when": "terminalEditorFocus"
+  },
+  {
+    "key": "ctrl+pageup",
+    "command": "workbench.action.previousEditorInGroup",
+    "when": "terminalEditorFocus"
+  },
+
+  // ---- Extensions (from the old VS Code keybindings) ----
+  {
+    "key": "ctrl+alt+d",
+    "command": "pandoc.render",
+    "args": { "format": "docx" }
+  },
+  // LaTeX Workshop also wants ctrl+alt+b; keep it for the secondary sidebar
+  { "key": "ctrl+alt+b", "command": "-latex-workshop.build" },
+
+  // ---- Completion menu (blink.cmp 'default' preset) ----
+  {
+    "key": "ctrl+y",
+    "command": "acceptSelectedSuggestion",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "hideSuggestWidget",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "selectNextSuggestion",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "selectPrevSuggestion",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "editor.action.triggerParameterHints",
+    "when": "editorTextFocus && vim.mode == 'Insert'"
+  }
+]
