@@ -85,6 +85,29 @@ do
   -- instead raise a dialog asking if you wish to save the current file(s)
   -- See `:help 'confirm'`
   vim.o.confirm = true
+
+  -- Windows: PowerShell instead of cmd.exe for :terminal and :!, with the
+  -- flags and redirection from `:help shell-powershell`
+  if vim.fn.has 'win32' == 1 then
+    -- The Store install of PowerShell 7 is only an app execution alias, which
+    -- executable() and :terminal reject; resolve it to the real (versioned) exe
+    local store_pwsh = vim.uv.fs_readlink(vim.env.LOCALAPPDATA .. '\\Microsoft\\WindowsApps\\pwsh.exe')
+    if vim.fn.executable 'pwsh' == 1 then
+      vim.o.shell = 'pwsh'
+    elseif store_pwsh and vim.fn.executable(store_pwsh) == 1 then
+      vim.o.shell = '"' .. store_pwsh .. '"' -- quoted: the path has spaces
+    else
+      vim.o.shell = 'powershell'
+    end
+    -- -NoProfile only affects :! and friends; :terminal still loads the profile
+    vim.o.shellcmdflag = '-NoLogo -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -Command '
+      .. '[Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();'
+      .. "$PSDefaultParameterValues['Out-File:Encoding']='utf8';"
+    vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+    vim.o.shellpipe = '2>&1 | %%{ "$_" } | Tee-Object %s; exit $LastExitCode'
+    vim.o.shellquote = ''
+    vim.o.shellxquote = ''
+  end
 end
 
 -- ============================================================
