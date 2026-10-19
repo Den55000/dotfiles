@@ -156,23 +156,118 @@ do
   -- or just use <C-\><C-n> to exit terminal mode
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-  -- Toggle a terminal split at the bottom; the same shell is kept between toggles
-  local term_buf
-  vim.keymap.set('n', '<leader>j', function()
-    local win = term_buf and vim.fn.bufwinid(term_buf) or -1
-    if win ~= -1 then
-      vim.api.nvim_win_hide(win)
-      return
+  -- [[ Terminal panel ]]
+  -- A bottom split holding several shells, like the VS Code terminal panel.
+  -- Its winbar lists the shells (click one to switch) and highlights the one shown.
+  local terms = {} -- terminal buffers in the panel, in creation order
+  local current -- the terminal buffer shown last
+
+  local function index_of(buf)
+    for i, b in ipairs(terms) do
+      if b == buf then return i end
     end
-    vim.cmd 'botright split | resize 15'
-    if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
-      vim.api.nvim_win_set_buf(0, term_buf)
+  end
+
+  local function panel_win()
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+      if vim.w[win].term_panel then return win end
+    end
+  end
+
+  -- Show `buf` in the panel, opening the panel if needed; without `buf`, start a new shell
+  local function show(buf)
+    local win = panel_win()
+    if win then
+      vim.api.nvim_set_current_win(win)
+    else
+      vim.cmd 'botright split | resize 15'
+      win = vim.api.nvim_get_current_win()
+      vim.w[win].term_panel = true
+    end
+    if buf then
+      vim.api.nvim_win_set_buf(win, buf)
     else
       vim.cmd 'terminal'
-      term_buf = vim.api.nvim_get_current_buf()
+      buf = vim.api.nvim_get_current_buf()
+      table.insert(terms, buf)
     end
+    -- Window options are remembered per buffer, so set them after switching
+    vim.wo[win].winfixheight = true
+    vim.wo[win].winbar = '%!v:lua.term_panel_winbar()'
+    current = buf
     vim.cmd 'startinsert'
-  end, { desc = 'Toggle terminal' })
+  end
+
+  -- Close a shell, keeping the panel open on a neighbour if it was showing this one
+  local function close(buf)
+    local i = index_of(buf)
+    local win = panel_win()
+    local neighbour = terms[i + 1] or terms[i - 1]
+    if win and neighbour and vim.api.nvim_win_get_buf(win) == buf then show(neighbour) end
+    vim.api.nvim_buf_delete(buf, { force = true })
+  end
+
+  local function cycle(step)
+    if #terms == 0 then return show() end
+    local i = index_of(current) or 1
+    show(terms[(i - 1 + step) % #terms + 1])
+  end
+
+  function _G.term_panel_winbar()
+    local labels = {}
+    for i, buf in ipairs(terms) do
+      -- Titles are often a full path to the shell; keep just the program name
+      local title = (vim.b[buf].term_title or 'shell'):match '([^\\/]+)$' or 'shell'
+      title = title:gsub('%.exe$', ''):gsub('%%', '%%%%')
+      local hl = buf == current and '%#TabLineSel#' or '%#TabLine#'
+      table.insert(labels, ('%s%%%d@v:lua.term_panel_click@ %d %s %%X'):format(hl, i, i, title))
+    end
+    return table.concat(labels, '%#TabLineFill#│') .. '%#TabLineFill#'
+  end
+
+  function _G.term_panel_click(i) show(terms[i]) end
+
+  local panel_group = vim.api.nvim_create_augroup('terminal-panel', { clear = true })
+  -- Like VS Code, typing `exit` removes that shell from the panel
+  vim.api.nvim_create_autocmd('TermClose', {
+    desc = 'Close terminal panel shells when they exit',
+    group = panel_group,
+    callback = function(args)
+      vim.schedule(function()
+        if index_of(args.buf) and vim.api.nvim_buf_is_valid(args.buf) then close(args.buf) end
+      end)
+    end,
+  })
+  vim.api.nvim_create_autocmd('BufDelete', {
+    desc = 'Remove closed terminals from the terminal panel',
+    group = panel_group,
+    callback = function(args)
+      local i = index_of(args.buf)
+      if not i then return end
+      table.remove(terms, i)
+      if current == args.buf then current = terms[i] or terms[i - 1] end
+    end,
+  })
+
+  local function toggle_panel()
+    local win = panel_win()
+    if win then return vim.api.nvim_win_hide(win) end
+    show(current)
+  end
+  vim.keymap.set('n', '<leader>j', toggle_panel, { desc = 'Toggle terminal panel' })
+  -- Same key as VS Code / Zed
+  vim.keymap.set({ 'n', 'i', 't' }, '<C-`>', toggle_panel, { desc = 'Toggle terminal panel' })
+  vim.keymap.set({ 'n', 't' }, '<C-PageDown>', function() cycle(1) end, { desc = 'Next terminal' })
+  vim.keymap.set({ 'n', 't' }, '<C-PageUp>', function() cycle(-1) end, { desc = 'Previous terminal' })
+  vim.keymap.set('n', '<leader>tn', function() show() end, { desc = '[T]erminal: [n]ew' })
+  vim.keymap.set('n', '<leader>tx', function()
+    if panel_win() and current then close(current) end
+  end, { desc = '[T]erminal: close current ([x])' })
+  for n = 1, 9 do
+    vim.keymap.set('n', '<leader>t' .. n, function()
+      if terms[n] then show(terms[n]) end
+    end, { desc = '[T]erminal: go to ' .. n })
+  end
 
   -- TIP: Disable arrow keys in normal mode
   -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -380,7 +475,7 @@ do
     -- Document existing key chains
     spec = {
       { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
-      { '<leader>t', group = '[T]oggle' },
+      { '<leader>t', group = '[T]oggle / [T]erminal' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
       { 'gr', group = 'LSP Actions', mode = { 'n' } },
     },
