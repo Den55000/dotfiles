@@ -15,6 +15,7 @@ edits the repo.
 | `kitty/*.conf`  | `~/.config/kitty/` (only where kitty is installed) |
 | `bin/dots`      | `~/.local/bin/dots`                         |
 | `vscode/`       | not linked, kept as an archive              |
+| `vscodium/`     | not linked, copy of `%APPDATA%\VSCodium\User` (`settings.json`, `keybindings.json`); `extensions.txt` from `codium --list-extensions`, reinstall with `xargs -n1 codium --install-extension < extensions.txt` |
 | `notepad++/`    | not linked, copy of `%APPDATA%\Notepad++` (Windows); `config.xml` has the recent-files and search history stripped |
 | `powertoys/`    | not linked, copy of `%LOCALAPPDATA%\Microsoft\PowerToys` settings (no logs, history or per-monitor state); `CommandPalette/` is from the Command Palette package's `LocalState` |
 | `windows/install-apps.ps1` | not linked; reinstalls my Windows apps with winget (`-DryRun` to preview) and lists the ones to install by hand |
