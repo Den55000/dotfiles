@@ -17,6 +17,7 @@ edits the repo.
 | `vscode/`       | not linked, kept as an archive              |
 | `vscodium/`     | `settings.json`, `keybindings.json` linked into `%APPDATA%\VSCodium\User` (Windows); `extensions.txt` from `codium --list-extensions`, reinstall with `xargs -n1 codium --install-extension < extensions.txt` |
 | `zed/`          | `settings.json`, `keymap.json` linked into `%APPDATA%\Zed` (Windows) |
+| `windows-terminal/` | `settings.json` linked into `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState` (Windows); Ctrl+Tab switches tabs in most-recently-used order (`tabSwitcherMode: mru`) |
 | `notepad++/`    | not linked, copy of `%APPDATA%\Notepad++` (Windows); `config.xml` has the recent-files and search history stripped |
 | `powertoys/`    | not linked, copy of `%LOCALAPPDATA%\Microsoft\PowerToys` settings (no logs, history or per-monitor state); `CommandPalette/` is from the Command Palette package's `LocalState` |
 | `wallpapers/`   | not linked; one background per environment, referenced by absolute path (`C:\Users\Denys\dotfiles\wallpapers\…`): `code-editor.jpg` (VSCodium), `desktop.jpg` (Windows), `browser.jpg` (LibreWolf new tab: uploaded by hand, the profile keeps its own copy), `launcher.jpg` (Command Palette), `terminal.jpg` (Windows Terminal) |
@@ -33,7 +34,7 @@ git clone git@github.com:Den55000/dotfiles.git ~/dotfiles   # or https:// with `
 
 Anything already at a target path is moved to `<name>.bak-dotfiles-<date>`.
 On Windows, run `install.sh` from Git Bash with Developer Mode on (needed for
-real symlinks); there it only links the VSCodium and Zed configs.
+real symlinks); there it only links the VSCodium, Zed and Windows Terminal configs.
 Needs zsh (+ zsh-syntax-highlighting, zsh-autosuggestions, starship are
 optional) and Neovim 0.12+ (`vim.pack`). Plugins install on first nvim start,
 pinned by `nvim/nvim-pack-lock.json`.

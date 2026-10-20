@@ -28,6 +28,8 @@ MINGW* | MSYS* | CYGWIN*)
     link vscodium/keybindings.json "$APPDATA_U/VSCodium/User/keybindings.json"
     link zed/settings.json         "$APPDATA_U/Zed/settings.json"
     link zed/keymap.json           "$APPDATA_U/Zed/keymap.json"
+    LOCALAPPDATA_U=$(cygpath -u "$LOCALAPPDATA")
+    link windows-terminal/settings.json "$LOCALAPPDATA_U/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
     exit 0
     ;;
 esac
