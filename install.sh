@@ -18,6 +18,20 @@ link() {
     echo "  linked $dst"
 }
 
+# Windows (Git Bash): only the app configs. Needs Developer Mode for real
+# symlinks; nativestrict makes ln fail instead of silently copying.
+case "$(uname -s)" in
+MINGW* | MSYS* | CYGWIN*)
+    export MSYS=winsymlinks:nativestrict
+    APPDATA_U=$(cygpath -u "$APPDATA")
+    link vscodium/settings.json    "$APPDATA_U/VSCodium/User/settings.json"
+    link vscodium/keybindings.json "$APPDATA_U/VSCodium/User/keybindings.json"
+    link zed/settings.json         "$APPDATA_U/Zed/settings.json"
+    link zed/keymap.json           "$APPDATA_U/Zed/keymap.json"
+    exit 0
+    ;;
+esac
+
 # Shell
 link zsh/.zshrc    "$HOME/.zshrc"
 link zsh/.zshenv   "$HOME/.zshenv"
