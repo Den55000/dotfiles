@@ -160,6 +160,8 @@
     "workbench.action.togglePanel",
     "workbench.action.createTerminalEditorSide",
     "workbench.action.createTerminalEditorSameGroup",
+    "workbench.action.toggleMaximizeEditorGroup",
+    "runCommands",
     "workbench.action.nextEditorInGroup",
     "workbench.action.previousEditorInGroup",
     "workbench.files.action.showActiveFileInExplorer"

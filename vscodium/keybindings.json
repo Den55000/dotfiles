@@ -28,16 +28,34 @@
   { "key": "ctrl+j", "command": "-workbench.action.togglePanel" },
   { "key": "ctrl+alt+j", "command": "workbench.action.togglePanel" },
   // ctrl+alt+b opens a new terminal in a split to the right (for coding LLMs)
-  // instead of the empty secondary sidebar
+  // instead of the empty secondary sidebar; once the split exists it
+  // hides/shows it (by maximizing the main editor group)
   { "key": "ctrl+alt+b", "command": "-workbench.action.toggleAuxiliaryBar" },
   {
     "key": "ctrl+alt+b",
     "command": "workbench.action.createTerminalEditorSide",
-    "when": "!terminalEditorFocus"
+    "when": "!terminalEditorFocus && !multipleEditorGroups && !editorPartMaximizedEditorGroup"
   },
-  // ...and from inside one of those terminals, adds a tab to the same split
   {
     "key": "ctrl+alt+b",
+    "command": "workbench.action.toggleMaximizeEditorGroup",
+    "when": "!terminalEditorFocus && multipleEditorGroups && !editorPartMaximizedEditorGroup"
+  },
+  {
+    "key": "ctrl+alt+b",
+    "command": "runCommands",
+    "args": { "commands": ["workbench.action.focusLeftGroup", "workbench.action.toggleMaximizeEditorGroup"] },
+    "when": "terminalEditorFocus && !editorPartMaximizedEditorGroup"
+  },
+  {
+    "key": "ctrl+alt+b",
+    "command": "runCommands",
+    "args": { "commands": ["workbench.action.toggleMaximizeEditorGroup", "workbench.action.focusRightGroup"] },
+    "when": "editorPartMaximizedEditorGroup"
+  },
+  // ctrl+shift+` inside one of those terminals adds a tab to the same split
+  {
+    "key": "ctrl+shift+`",
     "command": "workbench.action.createTerminalEditorSameGroup",
     "when": "terminalEditorFocus"
   },
