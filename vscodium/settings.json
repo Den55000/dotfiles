@@ -106,7 +106,7 @@
   // ---- Background picture (shalldie.background) ----
   // opacity is how visible the picture is over the UI (0.1-0.3 recommended)
   "background.fullscreen": {
-    "images": ["file:///C:/Users/Denys/Cloud/Images/Customisation/Wallpaper/14.jpg"],
+    "images": ["file:///C:/Users/Denys/dotfiles/wallpapers/themes/midnight/code-editor.jpg"],
     "opacity": 0.25,
     "size": "cover",
     "position": "center"
@@ -126,27 +126,30 @@
   "window.titleSeparator": "  ·  ",
 
   // ---- Editor (from the old VS Code settings in ~/dotfiles/vscode) ----
-  "workbench.colorTheme": "Dark Modern",
+  "workbench.colorTheme": "Midnight",
   "workbench.startupEditor": "none",
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "editor.largeFileOptimizations": false,
   "editor.colorDecoratorsLimit": 10000,
   "editor.defaultColorDecorators": "always",
   "editor.tokenColorCustomizations": {
-    "textMateRules": [
-      {
-        // Python docstrings look like comments
-        "scope": [
-          "string.quoted.docstring.python",
-          "string.quoted.double.block.python",
-          "string.quoted.single.block.python"
-        ],
-        "settings": {
-          "foreground": "#6A9955",
-          "fontStyle": "italic"
+    // Only for Dark Modern; the dotfiles themes colour docstrings themselves
+    "[Dark Modern]": {
+      "textMateRules": [
+        {
+          // Python docstrings look like comments
+          "scope": [
+            "string.quoted.docstring.python",
+            "string.quoted.double.block.python",
+            "string.quoted.single.block.python"
+          ],
+          "settings": {
+            "foreground": "#6A9955",
+            "fontStyle": "italic"
+          }
         }
-      }
-    ]
+      ]
+    }
   },
 
   // Let these shortcuts through to VS Code while the terminal has focus

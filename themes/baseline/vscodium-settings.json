@@ -1,0 +1,171 @@
+{
+  // ---- Vim (VSCodeVim), ported from ~/dotfiles/nvim/init.lua ----
+  "vim.leader": "<space>",
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.incsearch": true,
+  "vim.ignorecase": true,
+  "vim.smartcase": true,
+  "vim.highlightedyank.enable": true,
+
+  // Let VS Code handle these keys instead of vim
+  // (ctrl-b: toggle sidebar; ctrl-j: navigation, see keybindings.json)
+  "vim.handleKeys": {
+    "<C-b>": false,
+    "<C-j>": false
+  },
+
+  "vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["<Esc>"], "commands": [":nohl"] },
+
+    // File explorer (Neo-tree)
+    { "before": ["<leader>", "e"], "commands": ["workbench.files.action.showActiveFileInExplorer"] },
+
+    // Search (Telescope)
+    { "before": ["<leader>", "s", "f"], "commands": ["workbench.action.quickOpen"] },
+    { "before": ["<leader>", "s", "g"], "commands": ["workbench.action.findInFiles"] },
+    { "before": ["<leader>", "s", "w"], "commands": ["workbench.action.findInFiles"] },
+    { "before": ["<leader>", "s", "d"], "commands": ["workbench.actions.view.problems"] },
+    { "before": ["<leader>", "s", "c"], "commands": ["workbench.action.showCommands"] },
+    { "before": ["<leader>", "s", "k"], "commands": ["workbench.action.openGlobalKeybindings"] },
+    { "before": ["<leader>", "s", "n"], "commands": ["workbench.action.openSettingsJson"] },
+    { "before": ["<leader>", "s", "."], "commands": ["workbench.action.openRecent"] },
+    { "before": ["<leader>", "<leader>"], "commands": ["workbench.action.showAllEditorsByMostRecentlyUsed"] },
+    { "before": ["<leader>", "/"], "commands": ["actions.find"] },
+
+    // Diagnostics
+    { "before": ["<leader>", "q"], "commands": ["workbench.actions.view.problems"] },
+    { "before": ["]", "d"], "commands": ["editor.action.marker.next"] },
+    { "before": ["[", "d"], "commands": ["editor.action.marker.prev"] },
+
+    // Terminal
+    { "before": ["<leader>", "t", "n"], "commands": ["workbench.action.terminal.new"] },
+    { "before": ["<leader>", "t", "x"], "commands": ["workbench.action.terminal.kill"] },
+    { "before": ["<leader>", "t", "1"], "commands": ["workbench.action.terminal.focusAtIndex1"] },
+    { "before": ["<leader>", "t", "2"], "commands": ["workbench.action.terminal.focusAtIndex2"] },
+    { "before": ["<leader>", "t", "3"], "commands": ["workbench.action.terminal.focusAtIndex3"] },
+    { "before": ["<leader>", "t", "4"], "commands": ["workbench.action.terminal.focusAtIndex4"] },
+    { "before": ["<leader>", "t", "5"], "commands": ["workbench.action.terminal.focusAtIndex5"] },
+    { "before": ["<leader>", "t", "6"], "commands": ["workbench.action.terminal.focusAtIndex6"] },
+    { "before": ["<leader>", "t", "7"], "commands": ["workbench.action.terminal.focusAtIndex7"] },
+    { "before": ["<leader>", "t", "8"], "commands": ["workbench.action.terminal.focusAtIndex8"] },
+    { "before": ["<leader>", "t", "9"], "commands": ["workbench.action.terminal.focusAtIndex9"] },
+
+    // Toggles
+    { "before": ["<leader>", "t", "b"], "commands": ["git.blame.toggleEditorDecoration"] },
+
+    // Git hunks (gitsigns)
+    { "before": ["]", "c"], "commands": ["workbench.action.editor.nextChange"] },
+    { "before": ["[", "c"], "commands": ["workbench.action.editor.previousChange"] },
+    { "before": ["<leader>", "h", "s"], "commands": ["git.stageSelectedRanges"] },
+    { "before": ["<leader>", "h", "r"], "commands": ["git.revertSelectedRanges"] },
+    { "before": ["<leader>", "h", "S"], "commands": ["git.stage"] },
+    { "before": ["<leader>", "h", "R"], "commands": ["git.clean"] },
+    { "before": ["<leader>", "h", "p"], "commands": ["editor.action.dirtydiff.next"] },
+    { "before": ["<leader>", "h", "i"], "commands": ["editor.action.dirtydiff.next"] },
+    { "before": ["<leader>", "h", "d"], "commands": ["git.openChange"] },
+    { "before": ["<leader>", "h", "q"], "commands": ["workbench.view.scm"] },
+
+    // LSP (Neovim 0.11 defaults)
+    { "before": ["g", "r", "r"], "commands": ["editor.action.goToReferences"] },
+    { "before": ["g", "r", "i"], "commands": ["editor.action.goToImplementation"] },
+    { "before": ["g", "r", "a"], "commands": ["editor.action.quickFix"] },
+    { "before": ["g", "r", "n"], "commands": ["editor.action.rename"] },
+    { "before": ["g", "r", "d"], "commands": ["editor.action.revealDefinition"] },
+    { "before": ["g", "r", "t"], "commands": ["editor.action.goToTypeDefinition"] },
+    { "before": ["g", "r", "D"], "commands": ["editor.action.revealDeclaration"] },
+    { "before": ["g", "O"], "commands": ["workbench.action.gotoSymbol"] },
+    { "before": ["g", "W"], "commands": ["workbench.action.showAllSymbols"] },
+
+    // Format
+    { "before": ["<leader>", "f"], "commands": ["editor.action.formatDocument"] },
+
+    // Markdown preview (closes again with <space>p, see keybindings.json)
+    { "before": ["<leader>", "p"], "commands": ["markdown.showPreview"] }
+  ],
+
+  "vim.visualModeKeyBindingsNonRecursive": [
+    { "before": ["<leader>", "s", "w"], "commands": ["workbench.action.findInFiles"] },
+    { "before": ["<leader>", "h", "s"], "commands": ["git.stageSelectedRanges"] },
+    { "before": ["<leader>", "h", "r"], "commands": ["git.revertSelectedRanges"] },
+    { "before": ["<leader>", "f"], "commands": ["editor.action.formatSelection"] }
+  ],
+
+  // ---- Terminal ----
+  // PowerShell 7 from the Microsoft Store (only reachable via its app alias)
+  "terminal.integrated.profiles.windows": {
+    "PowerShell 7": {
+      "path": "${env:LOCALAPPDATA}\\Microsoft\\WindowsApps\\pwsh.exe",
+      "args": ["-NoLogo"],
+      "icon": "terminal-powershell"
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell 7",
+  "terminal.integrated.cursorStyle": "line",
+
+  // ---- Background picture (shalldie.background) ----
+  // opacity is how visible the picture is over the UI (0.1-0.3 recommended)
+  "background.fullscreen": {
+    "images": ["file:///C:/Users/Denys/dotfiles/wallpapers/code-editor.jpg"],
+    "opacity": 0.25,
+    "size": "cover",
+    "position": "center"
+  },
+
+  // ---- Minimal layout ----
+  // No activity bar; open views with their shortcuts
+  // (ctrl+shift+e/f/g/d/x) or <space>e, <space>sg
+  "workbench.activityBar.location": "hidden",
+  // Menu bar (File, Edit, ...) hidden; tap Alt to show it
+  "window.menuBarVisibility": "toggle",
+  // No search box or layout buttons in the title bar
+  "window.commandCenter": false,
+  "workbench.layoutControl.enabled": false,
+  // Title: project folder and git branch only
+  "window.title": "${rootName}${separator}${activeRepositoryBranchName}",
+  "window.titleSeparator": "  ·  ",
+
+  // ---- Editor (from the old VS Code settings in ~/dotfiles/vscode) ----
+  "workbench.colorTheme": "Dark Modern",
+  "workbench.startupEditor": "none",
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "editor.largeFileOptimizations": false,
+  "editor.colorDecoratorsLimit": 10000,
+  "editor.defaultColorDecorators": "always",
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        // Python docstrings look like comments
+        "scope": [
+          "string.quoted.docstring.python",
+          "string.quoted.double.block.python",
+          "string.quoted.single.block.python"
+        ],
+        "settings": {
+          "foreground": "#6A9955",
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+
+  // Let these shortcuts through to VS Code while the terminal has focus
+  "terminal.integrated.commandsToSkipShell": [
+    "matlab.interrupt",
+    "workbench.action.navigateLeft",
+    "workbench.action.navigateRight",
+    "workbench.action.navigateUp",
+    "workbench.action.navigateDown",
+    "workbench.action.toggleSidebarVisibility",
+    "workbench.action.togglePanel",
+    "workbench.action.createTerminalEditorSide",
+    "workbench.action.createTerminalEditorSameGroup",
+    "workbench.action.toggleMaximizeEditorGroup",
+    "runCommands",
+    "workbench.action.nextEditorInGroup",
+    "workbench.action.previousEditorInGroup",
+    "workbench.files.action.showActiveFileInExplorer"
+  ],
+  "background.enabled": true,
+  "workbench.iconTheme": "material-icon-theme"
+}

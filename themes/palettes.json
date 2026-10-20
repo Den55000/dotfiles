@@ -1,0 +1,277 @@
+{
+  "default": {
+    "name": "Default",
+    "type": "dark",
+    "builtin": "Dark Modern"
+  },
+  "soft-paper": {
+    "name": "Soft Paper",
+    "based_on": "Flexoki Light",
+    "type": "light",
+    "wallpapers": {
+      "stops": ["#403E3C", "#6F6E69", "#878580", "#B7B5AC", "#CECDC3", "#DAD8CE", "#E6E4D9", "#F2F0E5", "#FFFCF0"],
+      "code-editor": {
+        "scene": "Morning: low sun just over the ridge, paper-cream sky warming to amber, soft ink-grey land",
+        "sky": [[0, "#E6E4D9"], [0.55, "#FFFCF0"], [0.85, "#FAEEC6"], [1, "#FCC192"]],
+        "land": ["#6F6E69", "#878580", "#9F9D96", "#B7B5AC", "#CECDC3", "#E6E4D9", "#FAEEC6"],
+        "haze": {"colour": "#F2F0E5", "amount": 0.4},
+        "glow": {"x": 0.57, "colour": "#FFE7CE", "strength": 0.85, "radius": 0.22},
+        "sun": {"x": 0.57, "rise": 0.035, "radius": 0.022, "colour": "#FFFCF0"}
+      }
+    },
+    "ui": {
+      "bg": "#FFFCF0",
+      "bgDim": "#F2F0E5",
+      "bgAlt": "#E6E4D9",
+      "border": "#E6E4D9",
+      "lineHl": "#F2F0E5",
+      "sel": "#DAD8CE",
+      "fg": "#100F0F",
+      "fgDim": "#6F6E69",
+      "faint": "#B7B5AC",
+      "accent": "#205EA6",
+      "onAccent": "#FFFCF0"
+    },
+    "syntax": {
+      "comment": "#878580",
+      "keyword": "#66800B",
+      "operator": "#6F6E69",
+      "function": "#BC5215",
+      "string": "#24837B",
+      "number": "#5E409D",
+      "constant": "#AD8301",
+      "type": "#AD8301",
+      "variable": "#100F0F",
+      "property": "#205EA6",
+      "parameter": "#100F0F",
+      "tag": "#205EA6",
+      "attribute": "#AD8301",
+      "punctuation": "#6F6E69",
+      "escape": "#A02F6F",
+      "regexp": "#24837B",
+      "invalid": "#AF3029",
+      "language": "#A02F6F",
+      "import": "#AF3029"
+    },
+    "diag": {"error": "#AF3029", "warning": "#BC5215", "info": "#205EA6", "hint": "#24837B"},
+    "git": {"added": "#66800B", "modified": "#AD8301", "deleted": "#AF3029"},
+    "ansi": ["#100F0F", "#AF3029", "#66800B", "#AD8301", "#205EA6", "#A02F6F", "#24837B", "#6F6E69", "#B7B5AC", "#D14D41", "#879A39", "#D0A215", "#4385BE", "#CE5D97", "#3AA99F", "#CECDC3"]
+  },
+  "cold-stone": {
+    "name": "Cold Stone",
+    "based_on": "Nord",
+    "type": "dark",
+    "wallpapers": {
+      "stops": ["#242933", "#2E3440", "#3B4252", "#434C5E", "#4C566A", "#5E81AC", "#81A1C1", "#88C0D0", "#D8DEE9", "#ECEFF4"],
+      "code-editor": {
+        "scene": "Winter morning, overcast: flat grey cloud, pale cold light at the horizon, mist on the lake, light snow",
+        "sky": [[0, "#3B4252"], [0.5, "#4C566A"], [0.85, "#7B88A1"], [1, "#D8DEE9"]],
+        "land": ["#242933", "#2E3440", "#3B4252", "#434C5E", "#4C566A", "#5E81AC", "#81A1C1"],
+        "haze": {"colour": "#81A1C1", "amount": 0.3},
+        "glow": {"x": 0.5, "colour": "#E5E9F0", "strength": 0.3, "radius": 0.35},
+        "mist": {"colour": "#D8DEE9", "amount": 0.35},
+        "snow": {"colour": "#ECEFF4", "count": 650}
+      }
+    },
+    "ui": {
+      "bg": "#2E3440",
+      "bgDim": "#2B303B",
+      "bgAlt": "#3B4252",
+      "border": "#3B4252",
+      "lineHl": "#3B4252",
+      "sel": "#434C5E",
+      "fg": "#D8DEE9",
+      "fgDim": "#A5ADBB",
+      "faint": "#616E88",
+      "accent": "#88C0D0",
+      "onAccent": "#2E3440"
+    },
+    "syntax": {
+      "comment": "#616E88",
+      "keyword": "#81A1C1",
+      "operator": "#81A1C1",
+      "function": "#88C0D0",
+      "string": "#A3BE8C",
+      "number": "#B48EAD",
+      "constant": "#81A1C1",
+      "type": "#8FBCBB",
+      "variable": "#D8DEE9",
+      "property": "#D8DEE9",
+      "parameter": "#D8DEE9",
+      "tag": "#81A1C1",
+      "attribute": "#8FBCBB",
+      "punctuation": "#ECEFF4",
+      "escape": "#EBCB8B",
+      "regexp": "#EBCB8B",
+      "invalid": "#BF616A",
+      "language": "#81A1C1",
+      "import": "#81A1C1"
+    },
+    "diag": {"error": "#BF616A", "warning": "#EBCB8B", "info": "#88C0D0", "hint": "#8FBCBB"},
+    "git": {"added": "#A3BE8C", "modified": "#EBCB8B", "deleted": "#BF616A"},
+    "ansi": ["#3B4252", "#BF616A", "#A3BE8C", "#EBCB8B", "#81A1C1", "#B48EAD", "#88C0D0", "#E5E9F0", "#4C566A", "#BF616A", "#A3BE8C", "#EBCB8B", "#81A1C1", "#B48EAD", "#8FBCBB", "#ECEFF4"]
+  },
+  "midnight": {
+    "name": "Midnight",
+    "based_on": "Kanagawa Dragon",
+    "type": "dark",
+    "wallpapers": {
+      "stops": ["#0d0c0c", "#12120f", "#181616", "#282727", "#393836", "#625e5a", "#b6927b", "#c4b28a", "#c5c9c5"],
+      "code-editor": {
+        "scene": "Night: stars, a faint warm afterglow, ink-dark land, fireflies",
+        "sky": [[0, "#0d0c0c"], [0.5, "#12120f"], [0.8, "#1D1C19"], [0.95, "#393836"], [1, "#625e5a"]],
+        "land": ["#0d0c0c", "#12120f", "#181616", "#1D1C19", "#282727", "#393836", "#625e5a", "#b6927b"],
+        "glow": {"x": 0.5, "colour": "#b6927b", "strength": 0.45, "radius": 0.3},
+        "stars": 1,
+        "star_colour": "#c5c9c5",
+        "sparkles": true,
+        "vignette": true
+      }
+    },
+    "ui": {
+      "bg": "#181616",
+      "bgDim": "#12120f",
+      "bgAlt": "#282727",
+      "border": "#282727",
+      "lineHl": "#282727",
+      "sel": "#223249",
+      "fg": "#c5c9c5",
+      "fgDim": "#a6a69c",
+      "faint": "#625e5a",
+      "accent": "#8ba4b0",
+      "onAccent": "#181616"
+    },
+    "syntax": {
+      "comment": "#737c73",
+      "keyword": "#8992a7",
+      "operator": "#c4746e",
+      "function": "#8ba4b0",
+      "string": "#8a9a7b",
+      "number": "#a292a3",
+      "constant": "#b6927b",
+      "type": "#8ea4a2",
+      "variable": "#c5c9c5",
+      "property": "#c4b28a",
+      "parameter": "#a6a69c",
+      "tag": "#c4746e",
+      "attribute": "#c4b28a",
+      "punctuation": "#9e9b93",
+      "escape": "#b6927b",
+      "regexp": "#c4b28a",
+      "invalid": "#e46876",
+      "language": "#c4746e",
+      "import": "#c4746e"
+    },
+    "diag": {"error": "#e82424", "warning": "#ff9e3b", "info": "#658594", "hint": "#6a9589"},
+    "git": {"added": "#76946a", "modified": "#dca561", "deleted": "#c34043"},
+    "ansi": ["#0d0c0c", "#c4746e", "#8a9a7b", "#c4b28a", "#8ba4b0", "#a292a3", "#8ea4a2", "#c8c093", "#a6a69c", "#e46876", "#87a987", "#e6c384", "#7fb4ca", "#938aa9", "#7aa89f", "#c5c9c5"]
+  },
+  "blue-skies": {
+    "name": "Blue Skies",
+    "based_on": "Tokyo Night Day",
+    "type": "light",
+    "wallpapers": {
+      "stops": ["#6172b0", "#8990b3", "#a8aecb", "#b6bfe2", "#c4c8da", "#d0d5e3", "#e1e2e7", "#eef0f6"],
+      "code-editor": {
+        "scene": "Day: clear sky, soft blue overhead fading to white haze, pale distant mountains, a few clouds",
+        "sky": [[0, "#a9b8e6"], [0.5, "#c4cdea"], [0.85, "#e1e2e7"], [1, "#f2f3f7"]],
+        "land": ["#8990b3", "#959cc0", "#a8aecb", "#b6bfe2", "#c4c8da", "#d0d5e3", "#eef0f6"],
+        "haze": {"colour": "#e1e2e7", "amount": 0.35},
+        "clouds": {"colour": "#f6f7fb", "opacity": 0.9}
+      }
+    },
+    "ui": {
+      "bg": "#e1e2e7",
+      "bgDim": "#d0d5e3",
+      "bgAlt": "#c4c8da",
+      "border": "#c4c8da",
+      "lineHl": "#d5d6db",
+      "sel": "#b6bfe2",
+      "fg": "#3760bf",
+      "fgDim": "#6172b0",
+      "faint": "#a8aecb",
+      "accent": "#2e7de9",
+      "onAccent": "#e1e2e7"
+    },
+    "syntax": {
+      "comment": "#848cb5",
+      "keyword": "#9854f1",
+      "operator": "#006a83",
+      "function": "#2e7de9",
+      "string": "#587539",
+      "number": "#b15c00",
+      "constant": "#b15c00",
+      "type": "#188092",
+      "variable": "#3760bf",
+      "property": "#387068",
+      "parameter": "#8c6c3e",
+      "tag": "#f52a65",
+      "attribute": "#8c6c3e",
+      "punctuation": "#6172b0",
+      "escape": "#9854f1",
+      "regexp": "#188092",
+      "invalid": "#c64343",
+      "language": "#f52a65",
+      "import": "#9854f1"
+    },
+    "diag": {"error": "#c64343", "warning": "#8c6c3e", "info": "#07879d", "hint": "#118c74"},
+    "git": {"added": "#587539", "modified": "#8c6c3e", "deleted": "#c64343"},
+    "ansi": ["#e9e9ed", "#f52a65", "#587539", "#8c6c3e", "#2e7de9", "#9854f1", "#007197", "#6172b0", "#a1a6c5", "#f52a65", "#587539", "#8c6c3e", "#2e7de9", "#9854f1", "#007197", "#3760bf"]
+  },
+  "dark-forest": {
+    "name": "Dark Forest",
+    "based_on": "Everforest Dark",
+    "type": "dark",
+    "wallpapers": {
+      "stops": ["#1e2326", "#232a2e", "#2d353b", "#343f44", "#475258", "#56635f", "#83c092", "#a7c080", "#dbbc7f", "#d3c6aa"],
+      "code-editor": {
+        "scene": "Forest dusk: dark sage sky with an amber band, moss-green land, mist rising from the lake, first stars",
+        "sky": [[0, "#1e2326"], [0.45, "#232a2e"], [0.75, "#3d484d"], [0.92, "#7a8b6f"], [1, "#dbbc7f"]],
+        "land": ["#1e2326", "#232a2e", "#2d353b", "#333f3a", "#425047", "#56635f", "#a7c080"],
+        "glow": {"x": 0.5, "colour": "#e69875", "strength": 0.25, "radius": 0.25},
+        "mist": {"colour": "#9da9a0", "amount": 0.3},
+        "stars": 0.5,
+        "star_colour": "#d3c6aa",
+        "sparkles": true,
+        "vignette": true
+      }
+    },
+    "ui": {
+      "bg": "#2d353b",
+      "bgDim": "#232a2e",
+      "bgAlt": "#343f44",
+      "border": "#3d484d",
+      "lineHl": "#343f44",
+      "sel": "#475258",
+      "fg": "#d3c6aa",
+      "fgDim": "#9da9a0",
+      "faint": "#7a8478",
+      "accent": "#a7c080",
+      "onAccent": "#2d353b"
+    },
+    "syntax": {
+      "comment": "#859289",
+      "keyword": "#e67e80",
+      "operator": "#e69875",
+      "function": "#a7c080",
+      "string": "#83c092",
+      "number": "#d699b6",
+      "constant": "#d699b6",
+      "type": "#dbbc7f",
+      "variable": "#d3c6aa",
+      "property": "#7fbbb3",
+      "parameter": "#d3c6aa",
+      "tag": "#e69875",
+      "attribute": "#dbbc7f",
+      "punctuation": "#9da9a0",
+      "escape": "#d699b6",
+      "regexp": "#a7c080",
+      "invalid": "#e67e80",
+      "language": "#d699b6",
+      "import": "#e67e80"
+    },
+    "diag": {"error": "#e67e80", "warning": "#dbbc7f", "info": "#7fbbb3", "hint": "#83c092"},
+    "git": {"added": "#a7c080", "modified": "#7fbbb3", "deleted": "#e67e80"},
+    "ansi": ["#475258", "#e67e80", "#a7c080", "#dbbc7f", "#7fbbb3", "#d699b6", "#83c092", "#d3c6aa", "#859289", "#e67e80", "#a7c080", "#dbbc7f", "#7fbbb3", "#d699b6", "#83c092", "#d3c6aa"]
+  }
+}

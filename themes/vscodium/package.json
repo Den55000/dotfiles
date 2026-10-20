@@ -1,0 +1,42 @@
+{
+  "name": "dotfiles-themes",
+  "displayName": "Dotfiles Themes",
+  "description": "Generated from ~/dotfiles/themes/palettes.json by themes/build.py.",
+  "publisher": "denys",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Soft Paper",
+        "uiTheme": "vs",
+        "path": "./themes/soft-paper.json"
+      },
+      {
+        "label": "Cold Stone",
+        "uiTheme": "vs-dark",
+        "path": "./themes/cold-stone.json"
+      },
+      {
+        "label": "Midnight",
+        "uiTheme": "vs-dark",
+        "path": "./themes/midnight.json"
+      },
+      {
+        "label": "Blue Skies",
+        "uiTheme": "vs",
+        "path": "./themes/blue-skies.json"
+      },
+      {
+        "label": "Dark Forest",
+        "uiTheme": "vs-dark",
+        "path": "./themes/dark-forest.json"
+      }
+    ]
+  }
+}

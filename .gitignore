@@ -4,3 +4,9 @@ kitty/colors-active.conf
 
 # Backups
 *.bak*
+
+# Built by themes/build.py
+themes/dist/
+
+# Python
+__pycache__/
