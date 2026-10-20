@@ -20,6 +20,7 @@ edits the repo.
 | `notepad++/`    | not linked, copy of `%APPDATA%\Notepad++` (Windows); `config.xml` has the recent-files and search history stripped |
 | `powertoys/`    | not linked, copy of `%LOCALAPPDATA%\Microsoft\PowerToys` settings (no logs, history or per-monitor state); `CommandPalette/` is from the Command Palette package's `LocalState` |
 | `windows/install-apps.ps1` | not linked; reinstalls my Windows apps with winget (`-DryRun` to preview) and lists the ones to install by hand |
+| `windows/office-config.xml` | not linked; Office Deployment Tool config for Word, Excel and PowerPoint only (Microsoft 365 Business Standard) |
 
 ## New machine
 

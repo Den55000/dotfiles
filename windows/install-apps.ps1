@@ -78,7 +78,8 @@ $apps = @(
 )
 
 $manual = @(
-    'Microsoft 365            sign in at https://portal.office.com with the business account and install from there'
+    'Microsoft 365            Word/Excel/PowerPoint only: winget install Microsoft.OfficeDeploymentTool, then as admin'
+    '                         setup.exe /configure office-config.xml (in this folder); sign in with the business account'
     'Tresorit                 https://tresorit.com/download'
     'GlobalProtect            from the work VPN portal (the version it hands out matches the gateway)'
     'DaVinci Resolve          https://www.blackmagicdesign.com/products/davinciresolve'
