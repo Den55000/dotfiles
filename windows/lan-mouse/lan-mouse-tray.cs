@@ -3,7 +3,9 @@
 // Lan Mouse has no tray mode, but it is split into a GTK window and a
 // `lan-mouse daemon` that does the actual sharing. This helper keeps the
 // daemon running in the background with a tray icon, and opens the window on
-// demand, so closing the window no longer stops sharing.
+// demand, so closing the window no longer stops sharing. While it runs,
+// Ctrl+Alt+Up switches to the other laptop (Ctrl+Alt+Down, Lan Mouse's own
+// release_bind, switches back).
 //
 // Built and installed next to lan-mouse.exe by install.ps1 in this folder, with
 // the .NET Framework compiler that ships with Windows (C# 5, so no newer syntax).
@@ -47,13 +49,28 @@ class TrayContext : ApplicationContext
     [DllImport("user32.dll")] static extern bool SetForegroundWindow(IntPtr hWnd);
     [DllImport("user32.dll")] static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
     [DllImport("user32.dll")] static extern bool IsIconic(IntPtr hWnd);
+    [DllImport("user32.dll")] static extern bool RegisterHotKey(IntPtr hWnd, int id, uint mods, uint vk);
+    [DllImport("user32.dll")] static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+    [DllImport("user32.dll")] static extern short GetAsyncKeyState(int vk);
+    [DllImport("user32.dll")] static extern bool SetCursorPos(int x, int y);
+    [DllImport("user32.dll")] static extern uint SendInput(uint n, INPUT[] inputs, int size);
     const int SW_RESTORE = 9;
+    const uint MOD_ALT = 0x1, MOD_CONTROL = 0x2, MOD_NOREPEAT = 0x4000;
+    const int VK_CONTROL = 0x11, VK_MENU = 0x12, VK_UP = 0x26;
+    const uint INPUT_MOUSE = 0, MOUSEEVENTF_MOVE = 0x1;
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct MOUSEINPUT { public int dx, dy; public uint data, flags, time; public IntPtr extra; }
+    [StructLayout(LayoutKind.Sequential)]
+    struct INPUT { public uint type; public MOUSEINPUT mi; }
 
     readonly string dir = AppDomain.CurrentDomain.BaseDirectory;
     readonly string exe;
     readonly NotifyIcon tray;
     readonly Control invoker = new Control();
     readonly EventWaitHandle showEvent;
+    readonly HotkeyWindow hotkey = new HotkeyWindow();
+    readonly System.Windows.Forms.Timer switchTimer = new System.Windows.Forms.Timer { Interval = 20 };
     Process daemon;
     DateTime daemonStarted;
     int quickCrashes;
@@ -89,8 +106,45 @@ class TrayContext : ApplicationContext
         ThreadPool.RegisterWaitForSingleObject(showEvent,
             delegate { invoker.BeginInvoke((MethodInvoker)OpenWindow); }, null, -1, false);
 
+        // Ctrl+Alt+Up switches to the other laptop. It only fires while the mouse
+        // is here: once it is over there, Lan Mouse swallows the keys first.
+        hotkey.Pressed += delegate { if (daemon != null) switchTimer.Start(); };
+        switchTimer.Tick += delegate
+        {
+            // Wait for the keys to come up, or Lan Mouse would catch the releases
+            // and this PC would think they are still held when control comes back.
+            foreach (int vk in new[] { VK_CONTROL, VK_MENU, VK_UP })
+                if ((GetAsyncKeyState(vk) & 0x8000) != 0) return;
+            switchTimer.Stop();
+            SwitchToOtherPc();
+        };
+        if (!RegisterHotKey(hotkey.Handle, 1, MOD_CONTROL | MOD_ALT | MOD_NOREPEAT, VK_UP))
+            tray.ShowBalloonTip(5000, "Lan Mouse", "Ctrl+Alt+Up is taken by another program.", ToolTipIcon.Warning);
+
         StartDaemon();
         OpenWindow();
+    }
+
+    void SwitchToOtherPc()
+    {
+        // Lan Mouse switches when the cursor pushes through the edge the other
+        // laptop sits at (the top), so put it on the top edge and nudge it up.
+        Point p = Cursor.Position;
+        int top = SystemInformation.VirtualScreen.Top;
+        Rectangle screen = Rectangle.Empty;
+        foreach (Screen s in Screen.AllScreens)
+        {
+            if (s.Bounds.Top != top) continue;
+            if (screen.IsEmpty || (p.X >= s.Bounds.Left && p.X < s.Bounds.Right)) screen = s.Bounds;
+        }
+        SetCursorPos(Math.Max(screen.Left, Math.Min(p.X, screen.Right - 1)), top);
+
+        var move = new[] { new INPUT { type = INPUT_MOUSE, mi = new MOUSEINPUT { dy = -30, flags = MOUSEEVENTF_MOVE } } };
+        for (int i = 0; i < 5; i++)
+        {
+            SendInput(1, move, Marshal.SizeOf(typeof(INPUT)));
+            Thread.Sleep(15);
+        }
     }
 
     void StartDaemon()
@@ -154,6 +208,9 @@ class TrayContext : ApplicationContext
     void Quit()
     {
         quitting = true;
+        switchTimer.Stop();
+        UnregisterHotKey(hotkey.Handle, 1);
+        hotkey.DestroyHandle();
         foreach (int id in FindLanMouse(""))
         {
             try
@@ -211,5 +268,20 @@ class TrayContext : ApplicationContext
             }
         }
         return ids;
+    }
+}
+
+// Hidden window that receives WM_HOTKEY for RegisterHotKey.
+class HotkeyWindow : NativeWindow
+{
+    const int WM_HOTKEY = 0x0312;
+    public event MethodInvoker Pressed;
+
+    public HotkeyWindow() { CreateHandle(new CreateParams()); }
+
+    protected override void WndProc(ref Message m)
+    {
+        if (m.Msg == WM_HOTKEY && Pressed != null) Pressed();
+        base.WndProc(ref m);
     }
 }
