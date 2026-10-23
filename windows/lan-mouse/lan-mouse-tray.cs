@@ -5,9 +5,6 @@
 // daemon running in the background with a tray icon, and opens the window on
 // demand, so closing the window no longer stops sharing.
 //
-// It also runs release.ahk (a second release shortcut), started a moment after
-// the daemon so its keyboard hook comes before Lan Mouse's.
-//
 // Built and installed next to lan-mouse.exe by install.ps1 in this folder, with
 // the .NET Framework compiler that ships with Windows (C# 5, so no newer syntax).
 
@@ -57,9 +54,7 @@ class TrayContext : ApplicationContext
     readonly NotifyIcon tray;
     readonly Control invoker = new Control();
     readonly EventWaitHandle showEvent;
-    readonly System.Windows.Forms.Timer releaseScriptTimer = new System.Windows.Forms.Timer { Interval = 2000 };
     Process daemon;
-    Process releaseScript;
     DateTime daemonStarted;
     int quickCrashes;
     bool quitting;
@@ -94,8 +89,6 @@ class TrayContext : ApplicationContext
         ThreadPool.RegisterWaitForSingleObject(showEvent,
             delegate { invoker.BeginInvoke((MethodInvoker)OpenWindow); }, null, -1, false);
 
-        releaseScriptTimer.Tick += delegate { releaseScriptTimer.Stop(); StartReleaseScript(); };
-
         StartDaemon();
         OpenWindow();
     }
@@ -115,39 +108,6 @@ class TrayContext : ApplicationContext
         daemonStarted = DateTime.Now;
         daemon.EnableRaisingEvents = true;
         daemon.Exited += delegate { invoker.BeginInvoke((MethodInvoker)OnDaemonExited); };
-
-        // A new daemon installs a new hook, so the script has to follow it again.
-        releaseScriptTimer.Stop();
-        releaseScriptTimer.Start();
-    }
-
-    void StartReleaseScript()
-    {
-        StopReleaseScript();
-        string script = Path.Combine(dir, "release.ahk");
-        string ahk = null;
-        foreach (string root in new[] {
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Programs",
-            Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) })
-        {
-            string p = Path.Combine(root, @"AutoHotkey\v2\AutoHotkey64.exe");
-            if (File.Exists(p)) { ahk = p; break; }
-        }
-        if (ahk == null || !File.Exists(script)) return;
-
-        releaseScript = Process.Start(new ProcessStartInfo(ahk, "\"" + script + "\"")
-        {
-            WorkingDirectory = dir,
-            UseShellExecute = false,
-        });
-    }
-
-    void StopReleaseScript()
-    {
-        if (releaseScript == null) return;
-        try { if (!releaseScript.HasExited) releaseScript.Kill(); }
-        catch (InvalidOperationException) { }
-        releaseScript = null;
     }
 
     void OnDaemonExited()
@@ -194,8 +154,6 @@ class TrayContext : ApplicationContext
     void Quit()
     {
         quitting = true;
-        releaseScriptTimer.Stop();
-        StopReleaseScript();
         foreach (int id in FindLanMouse(""))
         {
             try
