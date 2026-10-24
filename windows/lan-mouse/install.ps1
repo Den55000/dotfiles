@@ -8,8 +8,28 @@
 # Re-running updates Lan Mouse and rebuilds the helper. The rest of
 # %LOCALAPPDATA%\lan-mouse (the pairing in config.toml, lan-mouse.pem) is per
 # machine and isn't touched.
-param([string]$Version = 'latest')
+#   .\install.ps1 -AllowWinLBlock  once, from an elevated PowerShell: lets the
+#                                  helper turn off Win+L while the mouse is on
+#                                  the other laptop (see below)
+param([string]$Version = 'latest', [switch]$AllowWinLBlock)
 $ErrorActionPreference = 'Stop'
+
+if ($AllowWinLBlock) {
+    # Windows handles Win+L below Lan Mouse's keyboard hook, so it locks this PC
+    # too. The helper sets DisableLockWorkstation while the mouse is over there,
+    # but Policies keys are admin-only: give this user read/write on just this one.
+    $me = [Security.Principal.WindowsIdentity]::GetCurrent()
+    if (-not ([Security.Principal.WindowsPrincipal]$me).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+        throw '-AllowWinLBlock has to run from an elevated PowerShell'
+    }
+    $key = [Microsoft.Win32.Registry]::CurrentUser.CreateSubKey('Software\Microsoft\Windows\CurrentVersion\Policies\System')
+    $acl = $key.GetAccessControl()
+    $acl.AddAccessRule([Security.AccessControl.RegistryAccessRule]::new($me.User, 'ReadKey, WriteKey', 'Allow'))
+    $key.SetAccessControl($acl)
+    $key.Close()
+    Write-Host "Win+L        $($me.Name) can now let the helper turn it off" -ForegroundColor Cyan
+    return
+}
 
 $here = $PSScriptRoot
 $dest = Join-Path $env:LOCALAPPDATA 'Programs\lan-mouse'

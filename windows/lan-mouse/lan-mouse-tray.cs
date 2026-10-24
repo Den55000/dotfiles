@@ -7,6 +7,12 @@
 // Ctrl+Alt+Up switches to the other laptop (Ctrl+Alt+Down, Lan Mouse's own
 // release_bind, switches back).
 //
+// While the mouse is on the other laptop, it also keeps this PC and its screen
+// awake and turns off Win+L here (Windows handles Win+L below Lan Mouse's
+// keyboard hook, so it would lock both laptops). It tells where the mouse is
+// by comparing Windows' last-input time with what its own hooks see: they sit
+// behind Lan Mouse's, so input Lan Mouse swallows never reaches them.
+//
 // Built and installed next to lan-mouse.exe by install.ps1 in this folder, with
 // the .NET Framework compiler that ships with Windows (C# 5, so no newer syntax).
 
@@ -15,10 +21,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 static class Program
 {
@@ -54,7 +62,11 @@ class TrayContext : ApplicationContext
     [DllImport("user32.dll")] static extern short GetAsyncKeyState(int vk);
     [DllImport("user32.dll")] static extern bool SetCursorPos(int x, int y);
     [DllImport("user32.dll")] static extern uint SendInput(uint n, INPUT[] inputs, int size);
+    [DllImport("user32.dll")] static extern bool GetLastInputInfo(ref LASTINPUTINFO info);
+    [DllImport("kernel32.dll")] static extern uint SetThreadExecutionState(uint flags);
     const int SW_RESTORE = 9;
+    const uint ES_CONTINUOUS = 0x80000000, ES_SYSTEM_REQUIRED = 0x1, ES_DISPLAY_REQUIRED = 0x2;
+    const string LockPolicyKey = @"Software\Microsoft\Windows\CurrentVersion\Policies\System";
     const uint MOD_ALT = 0x1, MOD_CONTROL = 0x2, MOD_NOREPEAT = 0x4000;
     const int VK_CONTROL = 0x11, VK_MENU = 0x12, VK_UP = 0x26;
     const uint INPUT_MOUSE = 0, MOUSEEVENTF_MOVE = 0x1;
@@ -63,6 +75,8 @@ class TrayContext : ApplicationContext
     struct MOUSEINPUT { public int dx, dy; public uint data, flags, time; public IntPtr extra; }
     [StructLayout(LayoutKind.Sequential)]
     struct INPUT { public uint type; public MOUSEINPUT mi; }
+    [StructLayout(LayoutKind.Sequential)]
+    struct LASTINPUTINFO { public uint cbSize; public uint dwTime; }
 
     readonly string dir = AppDomain.CurrentDomain.BaseDirectory;
     readonly string exe;
@@ -71,6 +85,10 @@ class TrayContext : ApplicationContext
     readonly EventWaitHandle showEvent;
     readonly HotkeyWindow hotkey = new HotkeyWindow();
     readonly System.Windows.Forms.Timer switchTimer = new System.Windows.Forms.Timer { Interval = 20 };
+    // Created before the daemon starts, so its hooks end up behind Lan Mouse's.
+    readonly InputWatcher watcher = new InputWatcher();
+    readonly System.Windows.Forms.Timer remoteTimer = new System.Windows.Forms.Timer { Interval = 50 };
+    bool onRemote;
     Process daemon;
     DateTime daemonStarted;
     int quickCrashes;
@@ -121,8 +139,56 @@ class TrayContext : ApplicationContext
         if (!RegisterHotKey(hotkey.Handle, 1, MOD_CONTROL | MOD_ALT | MOD_NOREPEAT, VK_UP))
             tray.ShowBalloonTip(5000, "Lan Mouse", "Ctrl+Alt+Up is taken by another program.", ToolTipIcon.Warning);
 
+        // Windows saw input more recently than the hooks did: Lan Mouse swallowed
+        // it, so the mouse is on the other laptop.
+        remoteTimer.Tick += delegate
+        {
+            var info = new LASTINPUTINFO { cbSize = (uint)Marshal.SizeOf(typeof(LASTINPUTINFO)) };
+            GetLastInputInfo(ref info);
+            int unseen = unchecked((int)info.dwTime - watcher.LastSeen);
+            SetRemote(daemon != null && unseen > 100);
+        };
+        SetRemote(false, true);   // clear a lock policy left behind by a crash
+        remoteTimer.Start();
+
         StartDaemon();
-        OpenWindow();
+
+        // Open the window once the daemon listens for frontends (port 5252);
+        // a window that comes up first starts a daemon of its own.
+        var started = DateTime.Now;
+        var waitTimer = new System.Windows.Forms.Timer { Interval = 100 };
+        waitTimer.Tick += delegate
+        {
+            bool listening = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties()
+                .GetActiveTcpListeners().Any(e => e.Port == 5252);
+            if (!listening && (DateTime.Now - started).TotalSeconds < 10) return;
+            waitTimer.Stop();
+            waitTimer.Dispose();
+            OpenWindow();
+        };
+        waitTimer.Start();
+    }
+
+    void SetRemote(bool remote, bool force = false)
+    {
+        if (remote == onRemote && !force) return;
+        onRemote = remote;
+        tray.Text = remote ? "Lan Mouse (on the other laptop)" : "Lan Mouse";
+
+        SetThreadExecutionState(remote ? ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED : ES_CONTINUOUS);
+        // Policies keys are admin-only unless install.ps1 -AllowWinLBlock opened
+        // this one up; without that, Win+L just keeps working on both laptops.
+        try
+        {
+            using (var key = Registry.CurrentUser.OpenSubKey(LockPolicyKey, true))
+            {
+                if (key == null) return;
+                if (remote) key.SetValue("DisableLockWorkstation", 1, RegistryValueKind.DWord);
+                else key.DeleteValue("DisableLockWorkstation", false);
+            }
+        }
+        catch (UnauthorizedAccessException) { }
+        catch (System.Security.SecurityException) { }
     }
 
     void SwitchToOtherPc()
@@ -149,15 +215,15 @@ class TrayContext : ApplicationContext
 
     void StartDaemon()
     {
-        // Adopt a daemon that is already running (e.g. left over from the window).
-        var existing = FindLanMouse("daemon");
-        if (existing.Count > 0)
+        // Replace a daemon that is already running (e.g. one the window started):
+        // its hook would be older than the watcher's, which then sees everything.
+        foreach (int id in FindLanMouse("daemon"))
         {
-            try { daemon = Process.GetProcessById(existing[0]); }
-            catch (ArgumentException) { daemon = null; }
+            try { Process.GetProcessById(id).Kill(); }
+            catch (ArgumentException) { }
+            catch (InvalidOperationException) { }
         }
-        if (daemon == null)
-            daemon = Launch("daemon");
+        daemon = Launch("daemon");
 
         daemonStarted = DateTime.Now;
         daemon.EnableRaisingEvents = true;
@@ -167,6 +233,7 @@ class TrayContext : ApplicationContext
     void OnDaemonExited()
     {
         daemon = null;
+        SetRemote(false);
         if (quitting) return;
 
         // Restart it, unless it keeps dying right away.
@@ -209,6 +276,8 @@ class TrayContext : ApplicationContext
     {
         quitting = true;
         switchTimer.Stop();
+        remoteTimer.Stop();
+        SetRemote(false);
         UnregisterHotKey(hotkey.Handle, 1);
         hotkey.DestroyHandle();
         foreach (int id in FindLanMouse(""))
@@ -283,5 +352,45 @@ class HotkeyWindow : NativeWindow
     {
         if (m.Msg == WM_HOTKEY && Pressed != null) Pressed();
         base.WndProc(ref m);
+    }
+}
+
+// Low-level mouse and keyboard hooks that only note when input got past
+// Lan Mouse. They run on their own thread: Windows drops hooks that answer
+// slowly, and the UI thread sometimes blocks on WMI queries.
+class InputWatcher
+{
+    delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
+    [DllImport("user32.dll")] static extern IntPtr SetWindowsHookEx(int id, HookProc proc, IntPtr hMod, uint threadId);
+    [DllImport("user32.dll")] static extern IntPtr CallNextHookEx(IntPtr hook, int code, IntPtr wParam, IntPtr lParam);
+    [DllImport("kernel32.dll")] static extern IntPtr GetModuleHandle(string name);
+    const int WH_KEYBOARD_LL = 13, WH_MOUSE_LL = 14;
+
+    readonly HookProc proc;   // kept in a field so the delegate isn't collected
+    int lastSeen = Environment.TickCount;
+
+    public int LastSeen { get { return Thread.VolatileRead(ref lastSeen); } }
+
+    public InputWatcher()
+    {
+        proc = OnInput;
+        var ready = new ManualResetEvent(false);
+        var thread = new Thread(delegate()
+        {
+            IntPtr module = GetModuleHandle(null);
+            SetWindowsHookEx(WH_MOUSE_LL, proc, module, 0);
+            SetWindowsHookEx(WH_KEYBOARD_LL, proc, module, 0);
+            ready.Set();
+            Application.Run();
+        });
+        thread.IsBackground = true;
+        thread.Start();
+        ready.WaitOne();
+    }
+
+    IntPtr OnInput(int code, IntPtr wParam, IntPtr lParam)
+    {
+        if (code >= 0) Thread.VolatileWrite(ref lastSeen, Environment.TickCount);
+        return CallNextHookEx(IntPtr.Zero, code, wParam, lParam);
     }
 }
